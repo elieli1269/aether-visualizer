@@ -1,0 +1,43 @@
+{
+  "name": "aether-visualizer",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Aether — visualiseur de musique fluide (barres + circulaire)",
+  "author": "elieli1269",
+  "license": "MIT",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win portable nsis --x64"
+  },
+  "devDependencies": {
+    "electron": "^37.3.1",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "app.aether.visualizer",
+    "productName": "Aether",
+    "copyright": "Copyright © 2026",
+    "files": [
+      "main.js",
+      "preload.js",
+      "renderer/**/*"
+    ],
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": [
+        { "target": "portable", "arch": ["x64"] },
+        { "target": "nsis", "arch": ["x64"] }
+      ],
+      "artifactName": "Aether-${version}-win-${arch}.${ext}"
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": false,
+      "shortcutName": "Aether"
+    }
+  }
+}

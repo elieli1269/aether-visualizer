@@ -1,0 +1,36 @@
+name: Build Windows EXE
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: npm install
+      - run: npx electron-builder --win portable nsis --x64
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Aether-Windows
+          path: dist/*.exe
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v1.0.0
+          name: Aether 1.0.0
+          body: |
+            Application Windows d’Aether.
+
+            - `Aether-1.0.0-win-x64.exe` — version portable (aucun installateur)
+            - installateur NSIS si présent
+          files: dist/*.exe
+          fail_on_unmatched_files: false
